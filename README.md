@@ -20,12 +20,11 @@ Ohne Supabase-Konfiguration zeigt die Seite Standardinhalte. Mit `?demo` am Ende
 ## Supabase einrichten
 
 1. `supabase/schema.sql` im SQL-Editor ausführen.
-2. Unter Authentication → Users einen Account für die Band anlegen.
-3. Diesen Account zum Admin machen:
+2. Die E-Mail des Admin-Accounts freischalten:
    ```sql
-   insert into public.admins (user_id)
-   select id from auth.users where email = 'band@example.com';
+   insert into public.admin_invites (email) values ('band@example.com');
    ```
+3. Unter Authentication → Users → Add user den Account mit dieser E-Mail anlegen („Auto Confirm User“ an). Er wird automatisch Admin.
 4. Unter Authentication → Sign In / Providers neue Registrierungen abschalten.
 5. URL und Publishable Key in `assets/js/config.js` eintragen.
 

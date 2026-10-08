@@ -19,7 +19,7 @@ as $$
   select exists (select 1 from public.admins where user_id = (select auth.uid()));
 $$;
 revoke all on function public.is_admin() from public;
-grant execute on function public.is_admin() to anon, authenticated;
+grant execute on function public.is_admin() to authenticated;
 
 create or replace function public.touch_updated_at()
 returns trigger
@@ -31,6 +31,35 @@ begin
   return new;
 end;
 $$;
+
+-- Vorab freigeschaltete Admin-E-Mails: sobald ein Account mit bestätigter
+-- E-Mail aus dieser Liste existiert, wird er automatisch Admin.
+create table if not exists public.admin_invites (
+  email text primary key check (email = lower(email)),
+  created_at timestamptz not null default now()
+);
+alter table public.admin_invites enable row level security;
+
+create or replace function public.grant_invited_admin()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  if new.email_confirmed_at is not null
+     and exists (select 1 from public.admin_invites where email = lower(new.email)) then
+    insert into public.admins (user_id) values (new.id) on conflict (user_id) do nothing;
+  end if;
+  return new;
+end;
+$$;
+revoke all on function public.grant_invited_admin() from public, anon, authenticated;
+
+drop trigger if exists on_auth_user_admin_invite on auth.users;
+create trigger on_auth_user_admin_invite
+  after insert or update of email_confirmed_at on auth.users
+  for each row execute function public.grant_invited_admin();
 
 -- ---------- Konzerte ----------
 create table if not exists public.concerts (
