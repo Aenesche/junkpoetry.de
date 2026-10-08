@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Junk Poetry</title>
+  <meta name="description" content="Junk Poetry – Konzerte, Musik und alles Neue von der Band.">
+  <meta name="theme-color" content="#241510">
+  <meta property="og:title" content="Junk Poetry">
+  <meta property="og:description" content="Konzerte, Musik und alles Neue von der Band.">
+  <meta property="og:image" content="https://junkpoetry.de/assets/img/hero.jpg">
+  <meta property="og:url" content="https://junkpoetry.de/">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/shrikhand-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/hero.jpg" as="image">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="vendor/supabase.js" defer></script>
+  <script type="module" src="assets/js/site.js"></script>
+</head>
+<body>
+  <!-- Duotone-Filter fürs Bandfoto: Schatten Espresso, Mitten Rost, Lichter Aprikose -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <filter id="duotone" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.30 0.59 0.11 0 0  0.30 0.59 0.11 0 0  0.30 0.59 0.11 0 0  0 0 0 1 0"/>
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.141 0.722 0.957"/>
+        <feFuncG type="table" tableValues="0.082 0.263 0.788"/>
+        <feFuncB type="table" tableValues="0.063 0.106 0.541"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
+
+  <header class="hero">
+    <div class="hero__photo">
+      <img id="hero-img" src="assets/img/hero.jpg" alt="Junk Poetry Arm in Arm auf der Bühne nach einem Konzert">
+    </div>
+    <div class="hero__shade" aria-hidden="true"></div>
+
+    <nav class="topnav" aria-label="Seitenbereiche">
+      <a href="#konzerte">Konzerte</a>
+      <a href="#musik">Musik</a>
+    </nav>
+
+    <h1 class="title">
+      <span class="title__word title__word--junk">Junk</span>
+      <span class="title__word title__word--poetry">Poetry</span>
+    </h1>
+
+    <svg class="swoosh" viewBox="0 0 1440 190" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path class="swoosh__fill" d="M0,168 C520,168 760,62 1160,62 L1440,62 L1440,190 L0,190 Z"/>
+      <g class="swoosh__lines" fill="none">
+        <path stroke="var(--mustard)" d="M0,120 C520,120 760,14 1160,14 L1440,14"/>
+        <path stroke="var(--orange)"  d="M0,134 C520,134 760,28 1160,28 L1440,28"/>
+        <path stroke="var(--rust)"    d="M0,148 C520,148 760,42 1160,42 L1440,42"/>
+        <path stroke="var(--cocoa-2)" d="M0,162 C520,162 760,56 1160,56 L1440,56"/>
+      </g>
+    </svg>
+  </header>
+
+  <main>
+    <section id="konzerte" class="section" aria-labelledby="konzerte-titel">
+      <div class="section__head">
+        <h2 id="konzerte-titel">Konzerte</h2>
+        <div class="sort" role="group" aria-label="Konzerte sortieren">
+          <button type="button" data-sort="asc" title="Nächste Konzerte zuerst" aria-pressed="true">Datum ↑</button>
+          <button type="button" data-sort="desc" title="Späteste Konzerte zuerst" aria-pressed="false">Datum ↓</button>
+          <button type="button" data-sort="city" aria-pressed="false">Stadt A–Z</button>
+        </div>
+      </div>
+      <ol class="gigs" id="gigs" aria-live="polite">
+        <li class="gigs__state">Termine werden geladen …</li>
+      </ol>
+    </section>
+
+    <section id="musik" class="section" aria-labelledby="musik-titel">
+      <div class="section__head">
+        <h2 id="musik-titel">Musik</h2>
+      </div>
+
+      <div class="release" id="release" hidden>
+        <div class="release__art">
+          <div class="vinyl" aria-hidden="true"><span class="vinyl__label"></span></div>
+          <div class="cover" id="release-cover"></div>
+        </div>
+        <div class="release__text">
+          <p class="release__by">Erschienen als Katura Kollektiv</p>
+          <h3 class="release__title" id="release-title"></h3>
+          <button type="button" class="play" id="play" aria-describedby="play-hint">
+            <svg class="play__ring" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="21" class="play__track"/>
+              <circle cx="24" cy="24" r="21" class="play__progress" id="play-progress"/>
+              <path class="play__icon play__icon--play" d="M19 15 L34 24 L19 33 Z"/>
+              <g class="play__icon play__icon--stop"><rect x="17" y="17" width="14" height="14" rx="2"/></g>
+            </svg>
+            <span class="play__label" id="play-label">Hörprobe abspielen</span>
+          </button>
+          <p class="release__hint" id="play-hint"></p>
+          <audio id="snippet" preload="none" crossorigin="anonymous"></audio>
+        </div>
+      </div>
+
+      <h3 class="platforms__title" id="platforms-titel">Überall zu hören</h3>
+      <div class="carousel" aria-labelledby="platforms-titel">
+        <ul class="carousel__track" id="platforms"></ul>
+        <div class="carousel__navs">
+          <button type="button" class="carousel__nav carousel__nav--prev" aria-label="Vorherige Plattform">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"/></svg>
+          </button>
+          <button type="button" class="carousel__nav carousel__nav--next" aria-label="Nächste Plattform">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5 L16 12 L9 19"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="stripes stripes--thin" aria-hidden="true"></div>
+    <div class="footer__inner">
+      <p class="footer__name">Junk Poetry</p>
+      <ul class="footer__links" id="footer-links">
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

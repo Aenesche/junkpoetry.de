@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin – Junk Poetry</title>
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="admin.css">
+  <script src="../vendor/supabase.js" defer></script>
+  <script type="module" src="admin.js"></script>
+</head>
+<body>
+  <header class="bar">
+    <a class="bar__name" href="../">Junk Poetry</a>
+    <span class="bar__meta" id="who"></span>
+    <button type="button" class="link" id="logout" hidden>Abmelden</button>
+  </header>
+  <div class="stripes stripes--thin" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <p class="notice" id="no-config" hidden>
+      Supabase ist noch nicht verbunden. Trag URL und Publishable Key in <code>assets/js/config.js</code> ein.
+    </p>
+
+    <!-- Login -->
+    <section class="panel login" id="login" hidden>
+      <h1>Anmelden</h1>
+      <form id="login-form" class="form">
+        <label>E-Mail
+          <input type="email" name="email" autocomplete="username" required>
+        </label>
+        <label>Passwort
+          <input type="password" name="password" autocomplete="current-password" required>
+        </label>
+        <button class="btn" type="submit">Anmelden</button>
+        <p class="form__msg" id="login-msg" role="alert"></p>
+      </form>
+    </section>
+
+    <p class="notice" id="not-admin" hidden>
+      Dieser Account hat keine Bearbeitungsrechte. Melde dich mit dem Band-Account an.
+    </p>
+
+    <!-- Editor -->
+    <div id="app" hidden>
+      <nav class="tabs" role="tablist" aria-label="Bereiche">
+        <button role="tab" type="button" data-tab="concerts" aria-selected="true">Konzerte</button>
+        <button role="tab" type="button" data-tab="music" aria-selected="false">Musik</button>
+        <button role="tab" type="button" data-tab="platforms" aria-selected="false">Plattformen</button>
+        <button role="tab" type="button" data-tab="site" aria-selected="false">Seite</button>
+      </nav>
+
+      <!-- Konzerte -->
+      <section class="panel" role="tabpanel" data-panel="concerts">
+        <h2 id="concert-form-title">Konzert hinzufügen</h2>
+        <form id="concert-form" class="form form--grid">
+          <input type="hidden" name="id">
+          <label>Datum
+            <input type="date" name="date" required>
+          </label>
+          <label>Beginn <span class="opt">optional</span>
+            <input type="time" name="start_time">
+          </label>
+          <label>Stadt
+            <input type="text" name="city" required maxlength="80">
+          </label>
+          <label>Location
+            <input type="text" name="venue" maxlength="120">
+          </label>
+          <label class="span-2">Ticket-Link <span class="opt">optional</span>
+            <input type="url" name="ticket_url" placeholder="https://">
+          </label>
+          <label>Status
+            <select name="status">
+              <option value="normal">Normal (mit Ticket-Link)</option>
+              <option value="sold_out">Ausverkauft</option>
+              <option value="free">Eintritt frei</option>
+              <option value="tba">Infos folgen</option>
+            </select>
+          </label>
+          <label>Hinweis <span class="opt">optional</span>
+            <input type="text" name="note" maxlength="140" placeholder="z. B. Mit Support">
+          </label>
+          <div class="form__actions span-2">
+            <button class="btn" type="submit" id="concert-submit">Konzert speichern</button>
+            <button class="btn btn--ghost" type="button" id="concert-cancel" hidden>Abbrechen</button>
+          </div>
+        </form>
+
+        <div class="list-head">
+          <h2>Termine</h2>
+          <label class="check"><input type="checkbox" id="show-past"> Vergangene zeigen</label>
+        </div>
+        <ul class="rows" id="concert-list"></ul>
+      </section>
+
+      <!-- Musik -->
+      <section class="panel" role="tabpanel" data-panel="music" hidden>
+        <div class="list-head">
+          <h2>Releases</h2>
+          <button class="btn btn--ghost" type="button" id="release-add">Release hinzufügen</button>
+        </div>
+        <p class="help">Auf der Seite erscheint das Release mit „Auf der Seite zeigen“. Die Hörprobe startet bei „Start“ und blendet nach „Länge“ Sekunden aus.</p>
+        <div id="release-list" class="releases"></div>
+      </section>
+
+      <!-- Plattformen -->
+      <section class="panel" role="tabpanel" data-panel="platforms" hidden>
+        <h2>Plattformen</h2>
+        <p class="help">Direkte Links zum Künstlerprofil sind am besten. Plattformen ohne Link oder ohne Haken werden nicht angezeigt.</p>
+        <form id="platform-form" class="form">
+          <ol class="rows rows--platforms" id="platform-list"></ol>
+          <div class="form__actions">
+            <button class="btn" type="submit">Plattformen speichern</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Seite -->
+      <section class="panel" role="tabpanel" data-panel="site" hidden>
+        <h2>Seite</h2>
+        <form id="site-form" class="form">
+          <div class="upload">
+            <img class="upload__preview upload__preview--wide" id="hero-preview" alt="Aktuelles Titelfoto">
+            <div>
+              <label>Titelfoto
+                <input type="file" name="hero" accept="image/*">
+              </label>
+              <p class="help">Querformat, mindestens 1600 px breit. Große Fotos werden beim Hochladen verkleinert.</p>
+              <button class="link" type="button" id="hero-reset">Standardfoto verwenden</button>
+            </div>
+          </div>
+          <label>Instagram <span class="opt">optional</span>
+            <input type="url" name="instagram_url" placeholder="https://instagram.com/…">
+          </label>
+          <label>Kontakt-E-Mail <span class="opt">optional</span>
+            <input type="email" name="contact_email">
+          </label>
+          <div class="form__actions">
+            <button class="btn" type="submit">Seite speichern</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <template id="release-tpl">
+    <form class="release-card form">
+      <div class="release-card__media">
+        <div class="upload">
+          <img class="upload__preview" data-cover alt="Cover">
+          <label>Cover
+            <input type="file" name="cover" accept="image/*">
+          </label>
+        </div>
+        <div class="upload upload--audio">
+          <audio controls preload="none" data-audio></audio>
+          <label>Hörprobe (MP3)
+            <input type="file" name="snippet" accept="audio/*">
+          </label>
+        </div>
+      </div>
+      <div class="form--grid">
+        <label class="span-2">Titel
+          <input type="text" name="title" required maxlength="120">
+        </label>
+        <label class="span-2">Link „Ganz anhören“ <span class="opt">optional</span>
+          <input type="url" name="link_url" placeholder="https://">
+        </label>
+        <label>Start (Sek.)
+          <input type="number" name="snippet_start" min="0" step="0.5" value="0">
+        </label>
+        <label>Länge (Sek.)
+          <input type="number" name="snippet_length" min="3" max="60" step="1" value="12">
+        </label>
+        <label>Reihenfolge
+          <input type="number" name="sort_order" step="1" value="0">
+        </label>
+        <label class="check"><input type="checkbox" name="is_featured"> Auf der Seite zeigen</label>
+      </div>
+      <div class="form__actions">
+        <button class="btn" type="submit">Release speichern</button>
+        <button class="btn btn--danger" type="button" data-delete>Löschen</button>
+      </div>
+    </form>
+  </template>
+</body>
+</html>

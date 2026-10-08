@@ -1,0 +1,106 @@
+/* Junk Poetry — gemeinsame Basis (Fonts + Farben) für Seite und Admin */
+
+@font-face {
+  font-family: "Shrikhand";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/shrikhand-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Shrikhand";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/shrikhand-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Bricolage";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../fonts/bricolage-grotesque-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Bricolage";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../fonts/bricolage-grotesque-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+A720-A7FF;
+}
+
+:root {
+  --espresso: #241510;
+  --cocoa: #4a2a1b;
+  --cocoa-2: #5c3622;
+  --rust: #b8431b;
+  --orange: #e8762a;
+  --mustard: #e9b23b;
+  --cream: #f3e3c3;
+  --cream-dim: #cdb898;
+
+  --display: "Shrikhand", "Cooper Black", Georgia, serif;
+  --body: "Bricolage", "Avenir Next", system-ui, sans-serif;
+
+  /* Typo-Skala (ca. 1.25) */
+  --t-sm: 0.875rem;
+  --t-base: 1.0625rem;
+  --t-md: 1.3rem;
+  --t-lg: 1.75rem;
+  --t-xl: clamp(2.2rem, 5vw, 3.4rem);
+
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --maxw: 68rem;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--espresso);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: var(--t-base);
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--mustard);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Die vier Streifen – das wiederkehrende 70s-Motiv */
+.stripes {
+  --h: 8px;
+  height: calc(var(--h) * 4);
+  background: linear-gradient(
+    var(--mustard) 0 25%,
+    var(--orange) 25% 50%,
+    var(--rust) 50% 75%,
+    var(--cocoa-2) 75% 100%
+  );
+}
