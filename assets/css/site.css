@@ -68,10 +68,9 @@
   align-items: flex-start;
   /* 70s-Stapelschatten */
   text-shadow:
-    0.035em 0.035em 0 var(--mustard),
-    0.07em 0.07em 0 var(--orange),
-    0.105em 0.105em 0 var(--rust),
-    0.14em 0.14em 0 var(--wine);
+    0.04em 0.04em 0 var(--mustard),
+    0.08em 0.08em 0 var(--orange),
+    0.12em 0.12em 0 var(--wine);
 }
 .title__word {
   display: block;
