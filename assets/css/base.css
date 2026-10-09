@@ -95,12 +95,17 @@ a { color: inherit; }
 
 /* Die vier Streifen – das wiederkehrende 70s-Motiv */
 .stripes {
-  --h: 8px;
-  height: calc(var(--h) * 4);
+  /* vier Streifen mit dunklen Fugen – Rennstreifen statt Flagge */
+  --h: 6px;
+  --g: 3px;
+  height: calc(var(--h) * 4 + var(--g) * 3);
   background: linear-gradient(
-    var(--mustard) 0 25%,
-    var(--orange) 25% 50%,
-    var(--rust) 50% 75%,
-    var(--cocoa-2) 75% 100%
+    var(--cream) 0 var(--h),
+    transparent 0 calc(var(--h) + var(--g)),
+    var(--mustard) 0 calc(var(--h) * 2 + var(--g)),
+    transparent 0 calc(var(--h) * 2 + var(--g) * 2),
+    var(--orange) 0 calc(var(--h) * 3 + var(--g) * 2),
+    transparent 0 calc(var(--h) * 3 + var(--g) * 3),
+    var(--rust) 0 100%
   );
 }

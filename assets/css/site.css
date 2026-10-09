@@ -97,8 +97,9 @@
   animation: wipe 0.9s cubic-bezier(.6, 0, .2, 1) 1.25s forwards;
 }
 .swoosh__fill { fill: var(--espresso); }
+.swoosh__lines .swoosh__band { stroke: var(--espresso); stroke-width: 56; }
 .swoosh__lines path {
-  stroke-width: 14;
+  stroke-width: 10;
   vector-effect: non-scaling-stroke;
 }
 
@@ -437,7 +438,8 @@
   .hero { min-height: max(30rem, 78svh); }
   .title { font-size: 19vw; }
   .swoosh { height: 120px; }
-  .swoosh__lines path { stroke-width: 9; }
+  .swoosh__lines path { stroke-width: 6; }
+  .swoosh__lines .swoosh__band { stroke-width: 36; }
   .release { grid-template-columns: 1fr; }
   .release__art { width: 62%; }
 }
@@ -551,7 +553,7 @@
 .footer {
   margin-top: clamp(3rem, 8vw, 6rem);
 }
-.stripes--thin { --h: 5px; }
+.stripes--thin { --h: 3px; --g: 2px; }
 .footer__inner {
   max-width: var(--maxw);
   margin: 0 auto;

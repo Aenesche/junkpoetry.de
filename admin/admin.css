@@ -238,3 +238,6 @@ input[type="file"] { font: inherit; font-size: var(--t-sm); color: var(--cream-d
 }
 .toast.is-on { opacity: 1; }
 .toast.is-error { background: #f3c2b0; }
+
+.form > .btn { justify-self: start; }
+.stripes--thin { --h: 4px; --g: 2px; }
