@@ -20,12 +20,12 @@ const FALLBACK = {
   settings: { hero_image_url: null, instagram_url: null, contact_email: null },
   releases: [
     {
-      title: "Live Demo EP",
+      title: "Too Much Detail (Live)",
       cover_url: null,
-      snippet_url: "assets/audio/platzhalter.mp3",
+      snippet_url: "assets/audio/too-much-detail-live.mp3",
       snippet_start: 0,
-      snippet_length: 12,
-      link_url: "https://open.spotify.com/album/70ShddcHZ79nznjIrz5NDt",
+      snippet_length: 15,
+      link_url: "https://open.spotify.com/track/74nkMUp8OcqwJfn5S4rJxb",
       is_featured: true,
       sort_order: 0,
     },

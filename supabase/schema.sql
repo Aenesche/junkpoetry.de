@@ -170,5 +170,5 @@ insert into public.platform_links (platform, label, url, visible, sort_order) va
 on conflict (platform) do nothing;
 
 insert into public.releases (title, snippet_url, snippet_start, snippet_length, link_url, is_featured, sort_order)
-select 'Live Demo EP', 'assets/audio/platzhalter.mp3', 0, 12, 'https://open.spotify.com/album/70ShddcHZ79nznjIrz5NDt', true, 0
+select 'Too Much Detail (Live)', 'assets/audio/too-much-detail-live.mp3', 0, 15, 'https://open.spotify.com/track/74nkMUp8OcqwJfn5S4rJxb', true, 0
 where not exists (select 1 from public.releases);
