@@ -38,6 +38,7 @@
   --cocoa: #4a2a1b;
   --cocoa-2: #5c3622;
   --rust: #b8431b;
+  --wine: #82263a;
   --orange: #e8762a;
   --mustard: #e9b23b;
   --cream: #f3e3c3;
@@ -95,10 +96,10 @@ a { color: inherit; }
 
 /* Die vier Streifen – das wiederkehrende 70s-Motiv */
 .stripes {
-  /* vier Streifen mit dunklen Fugen – Rennstreifen statt Flagge */
+  /* fünf Streifen mit dunklen Fugen, von Creme bis Weinrot */
   --h: 6px;
   --g: 3px;
-  height: calc(var(--h) * 4 + var(--g) * 3);
+  height: calc(var(--h) * 5 + var(--g) * 4);
   background: linear-gradient(
     var(--cream) 0 var(--h),
     transparent 0 calc(var(--h) + var(--g)),
@@ -106,6 +107,8 @@ a { color: inherit; }
     transparent 0 calc(var(--h) * 2 + var(--g) * 2),
     var(--orange) 0 calc(var(--h) * 3 + var(--g) * 2),
     transparent 0 calc(var(--h) * 3 + var(--g) * 3),
-    var(--rust) 0 100%
+    var(--rust) 0 calc(var(--h) * 4 + var(--g) * 3),
+    transparent 0 calc(var(--h) * 4 + var(--g) * 4),
+    var(--wine) 0 100%
   );
 }

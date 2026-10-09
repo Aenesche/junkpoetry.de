@@ -71,7 +71,7 @@
     0.035em 0.035em 0 var(--mustard),
     0.07em 0.07em 0 var(--orange),
     0.105em 0.105em 0 var(--rust),
-    0.14em 0.14em 0 var(--cocoa);
+    0.14em 0.14em 0 var(--wine);
 }
 .title__word {
   display: block;
@@ -91,13 +91,13 @@
 .swoosh {
   display: block;
   width: 100%;
-  height: 190px;
+  height: 200px;
   margin-bottom: -1px;
   clip-path: inset(0 100% 0 0);
   animation: wipe 0.9s cubic-bezier(.6, 0, .2, 1) 1.25s forwards;
 }
 .swoosh__fill { fill: var(--espresso); }
-.swoosh__lines .swoosh__band { stroke: var(--espresso); stroke-width: 56; }
+.swoosh__lines .swoosh__band { stroke: var(--espresso); stroke-width: 70; }
 .swoosh__lines path {
   stroke-width: 10;
   vector-effect: non-scaling-stroke;
@@ -140,7 +140,7 @@
   font-size: var(--t-xl);
   line-height: 1;
   color: var(--mustard);
-  text-shadow: 0.05em 0.05em 0 var(--rust);
+  text-shadow: 0.05em 0.05em 0 var(--wine);
 }
 
 /* ---------- Sortierung ---------- */
@@ -220,7 +220,7 @@
   font-size: 2.6rem;
   line-height: 1;
   color: var(--cream);
-  text-shadow: 0.05em 0.05em 0 var(--rust);
+  text-shadow: 0.05em 0.05em 0 var(--wine);
 }
 .gig__month {
   font-weight: 700;
@@ -271,7 +271,7 @@
   cursor: pointer;
   white-space: nowrap;
 }
-.btn:hover { background: var(--rust); }
+.btn:hover { background: var(--wine); }
 
 .stamp {
   display: inline-block;
@@ -332,7 +332,7 @@
   height: 100%;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 10px 10px 0 var(--rust);
+  box-shadow: 10px 10px 0 var(--wine);
   background: var(--cocoa);
 }
 .cover img { width: 100%; height: 100%; object-fit: cover; }
@@ -437,9 +437,9 @@
 @media (max-width: 640px) {
   .hero { min-height: max(30rem, 78svh); }
   .title { font-size: 19vw; }
-  .swoosh { height: 120px; }
+  .swoosh { height: 126px; }
   .swoosh__lines path { stroke-width: 6; }
-  .swoosh__lines .swoosh__band { stroke-width: 36; }
+  .swoosh__lines .swoosh__band { stroke-width: 44; }
   .release { grid-template-columns: 1fr; }
   .release__art { width: 62%; }
 }
@@ -626,7 +626,7 @@
   font-size: var(--t-xl);
   line-height: 1;
   color: var(--mustard);
-  text-shadow: 0.05em 0.05em 0 var(--rust);
+  text-shadow: 0.05em 0.05em 0 var(--wine);
 }
 .legal h2 {
   margin: 2.2rem 0 0.5rem;
